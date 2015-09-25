@@ -1,0 +1,66 @@
+  {% extends "base.html" %}
+  {% load staticfiles %}
+  {% load crispy_forms_tags %}
+
+  {% block headTitulo %}Bem Vindo ao meu site {% endblock %}
+
+<!-- Bloco de css
+  <style>
+  {% block style %}
+  	.lead_Custon{
+  		text-align: center;
+  	}
+  {% endblock %}
+  </style>
+-->
+	{% block Texto %}
+		<div class="jumbotron">
+			<div class="row">
+				<div class="col-sm-6">
+				    <h1>Try Django 1.8</h1>
+			        <p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
+			        <p>To see the difference between static and fixed top navbars, just scroll.</p>
+			        <p>
+			          <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">Clique aqui. Sem Vírus! &raquo;</a>
+			        </p>
+		        </div>
+	        <div class="col-sm-4">
+
+	        <iframe width="400" height="280" src="https://www.youtube.com/embed/j7A9ANT2aVQ" frameborder="0" allowfullscreen></iframe>
+	        	
+	    	</div>
+	    </div>
+	    </div>
+	{% endblock %}
+
+{% block content  %}
+<div class="row">
+	<div class="col-md-3 pull-right">
+
+		<p class="lead lead_Custon">{{ tituloForm }}</p>
+
+		{% if vFlag == None %}
+		<!-- {% include 'Form.html' %}-->
+		<form method="POST" action="."> {% csrf_token %}
+		{{ Formulario|crispy }}
+			<input class="btn btn-lg btn-primary" type="submit" value="Clique Aqui">
+		</form>
+	</div>
+	<div class="col-sm-3 lead_Custon">
+		<p class="lead">Feito com Django</p>
+		<img src="{% static 'img/EDI-Correndo.gif' %}">
+	</div>
+	<div class="col-sm-3 lead_Custon">
+		<p class="lead">Criado para Inicio Diversos</p>
+		<img src="{% static 'img/sector1162521408.gif' %}">
+	</div>
+	<div class="col-sm-3 lead_Custon">
+		<p class="lead">Sempre, Código Aberto. Open Source</p>
+		<span class="fa-stack fa-lg fa-5x">
+			<i class="fa fa-circle-o-notch fa-stack-2x fa-spin"></i>
+			<i class="fa fa-github fa-stack-1x"></i>
+		</span>
+	</div>
+</div>
+{% endif %}
+{% endblock %}
