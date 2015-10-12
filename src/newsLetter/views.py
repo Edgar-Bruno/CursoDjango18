@@ -12,28 +12,34 @@ from .models import SignUp
 
 # Create your views here.
 def home(request):
-	titulo = "Escreva aqui a sua mensagem na home"
 
-	formOBJ = SignUpForm(request.POST or None)
+	if request.method == 'POST':
 
-#	if request.method == "POST":
-#		print request.POST
+		formOBJ = SignUpForm(request.POST, request.FILES)
 
-	contexto = {
-			"tituloForm": titulo,
-			"Formulario": formOBJ
-	}
-	
+		if formOBJ.is_valid():
+			instance = formOBJ.save(commit=False)
 
-	if formOBJ.is_valid():
-		instance = formOBJ.save(commit=False)
-		instance.save()
+			instance.save()
+			
+			contexto = {
+				"tituloForm"	: "Obrigado!",
+				"vFlag"			: 1,
+				"img"			: instance
+			}
 
+	else:
+
+		formOBJ = SignUpForm()
+
+		titulo = "Escreva aqui a sua mensagem na home"
 
 		contexto = {
-			"tituloForm"	: "Obrigado!",
-			"vFlag"			: 1
+		"tituloForm": titulo,
+		"Formulario": formOBJ
 		}
+
+	
 
 	return render(request, 'home.html', contexto)
 
@@ -65,6 +71,7 @@ def contact(request):
 			"tituloForm"	: titulo,
 			"FormularioC"	: formOBJCont
 	}
+
 
 	for instace in SignUp.objects.all():
 		print "ID [ %d ] - %s" % (instace.id, instace.nomeCompleto)

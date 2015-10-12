@@ -10,7 +10,8 @@
 
 		<h1 class="col-sm-offset-3 lead_Custon">{{ tituloForm }}</h1>
 
-		<form method="POST" action="{% url 'home' %}"> {% csrf_token %}
+		<form method="POST" action="{% url 'home' %}" enctype="multipart/form-data"> 
+			{% csrf_token %}
 			{{ FormularioC|crispy }}
   			<input class="btn btn-lg btn-primary" type="submit" value="Clique Aqui">
 		</form>

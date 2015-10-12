@@ -10,6 +10,7 @@ class SignUp(models.Model):
 	timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
 	atualizacao = models.DateTimeField(auto_now_add=False, auto_now=True)
 	mensagem = models.TextField(max_length=500, blank=True, null=True)
+	photo = models.FileField(upload_to="projectimg/")
 
 	def __unicode__(self):
 		return self.email

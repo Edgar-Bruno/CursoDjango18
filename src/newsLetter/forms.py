@@ -10,16 +10,19 @@ class SignUpForm(forms.ModelForm):
 
 		model = SignUp
 
-		fields = ['email', 'nomeCompleto', 'mensagem']
+		fields = ['email', 'nomeCompleto', 'mensagem', 'photo']
 
 		help_text = {
 			'email'			: "Esse e-mail é para entrarmos em contado",
 			'nomeCompleto'	: "Edfsdfsdf gsdf  sdfs sfd sfsdf "
+
 		}
 
 		labels = {
 			'email'			: ('e-mail'),
 			'nomeCompleto'	: ('Nome Completo')
+	
+
 		}
 
 		widgets = {
@@ -28,6 +31,7 @@ class SignUpForm(forms.ModelForm):
             'mensagem'		: forms.Textarea(attrs={'placeholder': u'Digite aqui a sua mensagem...'}),
         }
 
+	photo = forms.FileField(label='Select a file', help_text='max. 20 megabytes', required=False)
 
 	def clean_email(self):
 		email = self.cleaned_data.get('email')

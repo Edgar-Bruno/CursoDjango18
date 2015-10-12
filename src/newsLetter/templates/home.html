@@ -31,7 +31,7 @@
 	    	</div>
 	    </div>
 	    </div>
-	{% endblock %}
+	{% endblock Texto %}
 
 {% block content  %}
 <div class="row">
@@ -41,10 +41,15 @@
 
 		{% if vFlag == None %}
 		<!-- {% include 'Form.html' %}-->
-		<form method="POST" action="."> {% csrf_token %}
+		<form method="POST" action="." enctype="multipart/form-data">
+		{% csrf_token %}
 		{{ Formulario|crispy }}
-			<input class="btn btn-lg btn-primary" type="submit" value="Clique Aqui">
+			<input class="btn btn-lg btn-primary" type="submit" value="Clique">
 		</form>
+
+		{% else %}
+			<img width="50" scr="{{ img.photo.url }}">
+		{% endif %}
 	</div>
 	<div class="col-sm-3 lead_Custon">
 		<p class="lead">Feito com Django</p>
@@ -62,5 +67,5 @@
 		</span>
 	</div>
 </div>
-{% endif %}
+
 {% endblock %}
