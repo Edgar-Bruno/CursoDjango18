@@ -10,7 +10,7 @@ class SignUpForm(forms.ModelForm):
 
 		model = SignUp
 
-		fields = ['email', 'nomeCompleto', 'mensagem', 'photo']
+		fields = ['email', 'nomeCompleto', 'mensagem', 'photo', ]
 
 		help_text = {
 			'email'			: "Esse e-mail é para entrarmos em contado",

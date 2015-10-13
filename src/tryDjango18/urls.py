@@ -33,6 +33,9 @@ urlpatterns = [
     url(r'^home/login/$', 'newsLetter.views.autenticado', name='login'),
     url(r'^home/registrar/$', 'newsLetter.views.registrar', name='registrar'),
     url(r'^home/sair/$', 'newsLetter.views.sair', name='sair'),
+
+    url(r'^home/index/$', 'newsLetter.views.index', name='index'),
+    url(r'^home/upload/$', 'newsLetter.views.Upload', name='upload'),
     #Essa url diz pega o que estiver após enrereço
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

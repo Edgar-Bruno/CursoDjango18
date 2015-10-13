@@ -13,6 +13,7 @@
 		<form method="POST" action="{% url 'home' %}" enctype="multipart/form-data"> 
 			{% csrf_token %}
 			{{ FormularioC|crispy }}
+			
   			<input class="btn btn-lg btn-primary" type="submit" value="Clique Aqui">
 		</form>
 	</div>

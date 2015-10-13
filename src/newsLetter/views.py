@@ -5,6 +5,8 @@ from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
+from django.forms.formsets import formset_factory
+
 
 from .forms import SignUpForm, LoginForm, RegistroForm
 from .models import SignUp
@@ -12,6 +14,8 @@ from .models import SignUp
 
 # Create your views here.
 def home(request):
+
+	#SignUpFormSet = formset_factory(SignUpForm,min_num=3, validate_min=True)
 
 	if request.method == 'POST':
 
@@ -42,6 +46,22 @@ def home(request):
 	
 
 	return render(request, 'home.html', contexto)
+
+def index(request):
+	return render(request, 'upload.html', {})
+
+
+def Upload(request):
+
+	for count, x in enumerate(request.FILES.getlist("files_EDi")):
+		def process(f):
+			with open('media' + str(f), 'wb+') as destination:
+				for chunk in f.chunks():
+					destination.write(chunk)
+		process(x)
+	
+	return HttpResponse('Upados')
+
 
 
 @login_required
