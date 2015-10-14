@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 from django import forms
 from django.contrib.auth.models import User
@@ -10,10 +11,14 @@ class SignUp(models.Model):
 	timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
 	atualizacao = models.DateTimeField(auto_now_add=False, auto_now=True)
 	mensagem = models.TextField(max_length=500, blank=True, null=True)
-	photo = models.FileField(upload_to="projectimg/")
 
 	def __unicode__(self):
 		return self.email
+
+class SugnUpIMG(models.Model):
+	photos = models.FileField(upload_to="projectimg/")
+	signup = models.ForeignKey(SignUp)
+	# Relação 1 x M
 
 class UserProfile (models.Model):
 	Usuario = models.OneToOneField(User, related_name='user_profile')

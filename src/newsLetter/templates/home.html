@@ -43,7 +43,9 @@
 		<!-- {% include 'Form.html' %}-->
 		<form method="POST" action="." enctype="multipart/form-data">
 		{% csrf_token %}
+		{{ UploadIn }}
 		{{ Formulario | crispy }}
+
 <!--
 		{{ Formulario.management_form }}
 		<table>

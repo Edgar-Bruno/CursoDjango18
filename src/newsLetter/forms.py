@@ -2,7 +2,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from .models import SignUp
+from .models import SignUp, SugnUpIMG
 
 class SignUpForm(forms.ModelForm):
 
@@ -10,7 +10,7 @@ class SignUpForm(forms.ModelForm):
 
 		model = SignUp
 
-		fields = ['email', 'nomeCompleto', 'mensagem', 'photo', ]
+		fields = ['email', 'nomeCompleto', 'mensagem' ]
 
 		help_text = {
 			'email'			: "Esse e-mail é para entrarmos em contado",
@@ -31,7 +31,6 @@ class SignUpForm(forms.ModelForm):
             'mensagem'		: forms.Textarea(attrs={'placeholder': u'Digite aqui a sua mensagem...'}),
         }
 
-	photo = forms.FileField(label='Select a file', help_text='max. 20 megabytes', required=False)
 
 	def clean_email(self):
 		email = self.cleaned_data.get('email')
@@ -43,6 +42,22 @@ class SignUpForm(forms.ModelForm):
 			raise forms.ValidationError(u'Por favor insira um email validado .edi [ %s ]' % email)
 		return email
 # Login
+
+class SugnUpIMGForm(forms.Form):
+
+	class Meta:
+
+		model = SugnUpIMG
+
+	photos = forms.FileField(label='Select a file',
+								help_text='max. 20 megabytes',
+								required=False,
+								widget=forms.ClearableFileInput(attrs={
+									'multiple': 'multiple',
+									  'accept':'image/x-png, image/gif, image/jpeg'})
+							)
+
+
 class LoginForm(forms.Form):
 
 	username = forms.CharField(label='Usuário de acesso', max_length=30,

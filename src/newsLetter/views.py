@@ -8,24 +8,26 @@ from django.contrib.auth.decorators import login_required
 from django.forms.formsets import formset_factory
 
 
-from .forms import SignUpForm, LoginForm, RegistroForm
-from .models import SignUp
+from .forms import SignUpForm, LoginForm, RegistroForm, SugnUpIMGForm
+from .models import SignUp, SugnUpIMG
 
 
-# Create your views here.
 def home(request):
-
-	#SignUpFormSet = formset_factory(SignUpForm,min_num=3, validate_min=True)
 
 	if request.method == 'POST':
 
 		formOBJ = SignUpForm(request.POST, request.FILES)
 
+		print request.FILES
+
 		if formOBJ.is_valid():
 			instance = formOBJ.save(commit=False)
 
 			instance.save()
-			
+
+			for key in request.FILES.getlist("photos"):
+				SugnUpIMG.objects.create(signup_id=instance.id, photos=key)
+
 			contexto = {
 				"tituloForm"	: "Obrigado!",
 				"vFlag"			: 1,
@@ -34,16 +36,13 @@ def home(request):
 
 	else:
 
-		formOBJ = SignUpForm()
-
 		titulo = "Escreva aqui a sua mensagem na home"
 
 		contexto = {
 		"tituloForm": titulo,
-		"Formulario": formOBJ
-		}
-
-	
+		"Formulario": SignUpForm(),
+		"UploadIn"	: SugnUpIMGForm()
+		}	
 
 	return render(request, 'home.html', contexto)
 
@@ -53,15 +52,18 @@ def index(request):
 
 def Upload(request):
 
+	print '-------->'
+	print (request.FILES.getlist("files_EDi"))
+	print '-------->'
 	for count, x in enumerate(request.FILES.getlist("files_EDi")):
+		print 'sanjiro--- > %s' % x
 		def process(f):
-			with open('media' + str(f), 'wb+') as destination:
+			with open('' + str(f), 'wb+') as destination:
 				for chunk in f.chunks():
 					destination.write(chunk)
 		process(x)
 	
 	return HttpResponse('Upados')
-
 
 
 @login_required
