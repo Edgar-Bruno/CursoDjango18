@@ -2,6 +2,7 @@
 from django.db import models
 from django import forms
 from django.contrib.auth.models import User
+from PIL import Image
 
 # Create your models here.
 class SignUp(models.Model):
@@ -18,6 +19,9 @@ class SignUp(models.Model):
 class SugnUpIMG(models.Model):
 	photos = models.FileField(upload_to="projectimg/")
 	signup = models.ForeignKey(SignUp)
+	
+	#def __unicode__(self):
+	#	return self.photos
 	# Relação 1 x M
 
 class UserProfile (models.Model):

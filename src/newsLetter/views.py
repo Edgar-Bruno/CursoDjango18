@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
-from django.forms.formsets import formset_factory
+from django.shortcuts import get_object_or_404
 
 
 from .forms import SignUpForm, LoginForm, RegistroForm, SugnUpIMGForm
@@ -18,20 +18,21 @@ def home(request):
 
 		formOBJ = SignUpForm(request.POST, request.FILES)
 
-		print request.FILES
-
 		if formOBJ.is_valid():
 			instance = formOBJ.save(commit=False)
 
 			instance.save()
 
 			for key in request.FILES.getlist("photos"):
-				SugnUpIMG.objects.create(signup_id=instance.id, photos=key)
+				#IMG = SugnUpIMG(signup_id=instance.id, photos=key)
+				#IMG.save()
+				IMX = SugnUpIMG.objects.create(signup_id=instance.id, photos=key)
+			#print '----------------------', SugnUpIMG.objects.filter(signup_id=instance.id,)
 
 			contexto = {
 				"tituloForm"	: "Obrigado!",
 				"vFlag"			: 1,
-				"img"			: instance
+				"img"			: SugnUpIMG.objects.filter(signup_id=instance.id,)
 			}
 
 	else:
@@ -45,11 +46,11 @@ def home(request):
 		}	
 
 	return render(request, 'home.html', contexto)
-
+# View de teste
 def index(request):
 	return render(request, 'upload.html', {})
 
-
+# View de teste
 def Upload(request):
 
 	print '-------->'
@@ -64,6 +65,23 @@ def Upload(request):
 		process(x)
 	
 	return HttpResponse('Upados')
+
+
+def detail(request, id):
+
+	checkSignUp = get_object_or_404(SignUp, id=id)
+
+	Initial = {'email': checkSignUp.email,
+			'nomeCompleto': checkSignUp.nomeCompleto,
+			'mensagem': checkSignUp.mensagem
+			}
+
+	contexto = {
+		"visualiza"		: checkSignUp,
+		"img"			: SugnUpIMG.objects.filter(signup_id=id)
+		}	
+
+	return render(request, 'detail.html', contexto)
 
 
 @login_required

@@ -19,7 +19,7 @@ from django.contrib import admin
 
 from django.conf import settings
 from django.conf.urls.static import static
-
+from django.contrib.staticfiles import views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -34,12 +34,13 @@ urlpatterns = [
     url(r'^home/registrar/$', 'newsLetter.views.registrar', name='registrar'),
     url(r'^home/sair/$', 'newsLetter.views.sair', name='sair'),
 
+
     url(r'^home/index/$', 'newsLetter.views.index', name='index'),
     url(r'^home/upload/$', 'newsLetter.views.Upload', name='upload'),
-    #Essa url diz pega o que estiver após enrereço
+    url(r'^home/(?P<id>\d+)/$', 'newsLetter.views.detail', name='detail'),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -46,19 +46,17 @@
 		{{ UploadIn }}
 		{{ Formulario | crispy }}
 
-<!--
-		{{ Formulario.management_form }}
-		<table>
-       		 {% for form in Formulario %}
-      		  {{ form }}
-       			{% endfor %}
-  	  </table>
-
--->			<input class="btn btn-lg btn-primary" type="submit" value="Clique">
+		<input class="btn btn-lg btn-primary" type="submit" value="Clique">
 		</form>
 
 		{% else %}
-			<img width="50" scr="{{ img.photo.url }}">
+
+			{% for fotos in img %}
+			
+				<img width="240" height="240" border="3" src="{{ fotos.photos.url }}">
+
+			{% endfor %}
+			
 		{% endif %}
 	</div>
 	<div class="col-sm-3 lead_Custon">
